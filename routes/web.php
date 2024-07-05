@@ -17,14 +17,6 @@ Route::get('/register', function () {
 })->name('registerForm');
 
 
-Route::get('/add_assignment', function () {
-    return view('add_assignment');
-})->name('add_assignment');
-
-Route::get('/view_assignment', function () {
-    return view('view_assignment');
-})->name('view_assignment');
-
 Route::get('/contact', function () {
     return view('contact');
 })->name('contactpage');
