@@ -229,15 +229,16 @@ h6 {
 
 /* Card */
 .card {
+  border-color: #d4d5d6;
   margin-bottom: 30px;
-  border: none;
+  /* border: none; */
   border-radius: 5px;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
 }
 
 .card-header,
 .card-footer {
-  border-color: #ebeef4;
+  border-color: rgb(216, 215, 215);
   background-color: #fff;
   color: #798eb3;
   padding: 15px;
@@ -258,6 +259,7 @@ h6 {
 }
 
 .card-body {
+  border-color: black;
   padding: 0 20px 20px 20px;
 }
 
