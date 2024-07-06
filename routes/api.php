@@ -22,8 +22,6 @@ Route::middleware(['web'])->group(function () {
         Route::get('/Add_Assignment', 'index')->name('add_assignment');
         Route::get('/submitAssignment', 'submitAssign')->name('submitAssign');
         Route::get('/View_Assignment', 'viewAssignment')->name('view_assignment');
-        // Route::post('/login', 'login')->name('login');
-        // Route::get('/add','index')->name('index');
     });
 
 
