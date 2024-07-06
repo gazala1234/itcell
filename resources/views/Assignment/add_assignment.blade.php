@@ -2,8 +2,6 @@
 
 @section('maincontent')
     {{-- our links --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -41,9 +39,9 @@
                         display: none;
                     }
                 </style>
-                <div class="card-body" style="font-size:13px">
-                    <table class="table table-bordered">
-                        <thead class="thead-dark">
+                <div class="card-body " style="font-size:13px">
+                    <table class="table table-bordered mt-3">
+                        <thead class="table-dark">
                             <tr style='text-transform: uppercase; text-align:center;'>
                                 <th rowspan='2'>Sl No</th>
                                 <th rowspan='2'>Academic Year</th>
@@ -83,12 +81,12 @@
                                 </td>
 
                                 <td>
-                                    <input type='date' id='from' name='from[]' class='form-control'
+                                    <input type='date' id='from' name='from[]' class='form-control from-date'
                                         placeholder='Enter From Date' required>
                                 </td>
 
                                 <td>
-                                    <input type='date' id='to' name='to[]' class='form-control'
+                                    <input type='date' id='to' name='to[]' class='form-control to-date'
                                         placeholder='Enter To Date' required>
                                 </td>
 
@@ -100,8 +98,6 @@
                                     <center>
                                         <i class="bi bi-patch-plus add_new hide" style="font-size: 27px;"></i>
                                         <i class="bi bi-trash3 delete" style="font-size: 27px;"></i>
-                                        {{-- <i class="fa fa-plus-circle mr-1 add_new hide"></i> --}}
-                                        {{-- <i class="fa fa-times-circle delete "></i> --}}
                                     </center>
 
                                 </td>
@@ -126,7 +122,7 @@
             sl++;
             markup = '<tr>';
             markup += '<td><span class="sl" style="font-size:18px;">' + sl + '</span></td>';
-            //Course Name Field
+            //Academic Year Field
             markup += "<td><select class='form-control' name='acd_year[]' id='acd_year' required>" +
                 "<option value=''>select academic year</option>" +
                 "<option>2019-2020</option>" +
@@ -135,16 +131,22 @@
                 "<option>2022-2023</option>" +
                 "<option>2023-2024</option>" +
                 "</select></td>";
+            //Task Name Field
             markup +=
                 "<td><input type='text' id='task' name='task[]' class='form-control' placeholder='Enter Task Name' required></td>";
+            //Description Field
             markup +=
                 "<td><textarea id='description' name='description[]' class='form-control' placeholder='Enter Description' required></textarea></td>";
+            //From Date Field
             markup +=
-                "<td><input type='date' id='from' name='from[]' class='form-control' placeholder='Enter From Date' required></td>";
+                "<td><input type='date' id='from' name='from[]' class='form-control from-date' placeholder='Enter From Date' required></td>";
+            //To Date Field
             markup +=
-                "<td><input type='date' id='to' name='to[]' class='form-control' placeholder='Enter To Date' required></td>";
+                "<td><input type='date' id='to' name='to[]' class='form-control to-date' placeholder='Enter To Date' required></td>";
+            //File Upload Field
             markup +=
                 "<td><input type='file' id='file' name='file[]' class='form-control' onchange='validateFile(this)' required></td>";
+            //Add and Delete Icon Field
             markup += "<td>";
             markup += "<center>";
             markup += "<i class='bi bi-patch-plus add_new hide' style='font-size:27px'></i>";
@@ -153,7 +155,6 @@
             markup += "</tr>";
             tableBody = $("tbody");
             tableBody.append(markup);
-            // $.fn.multiSelect();
             $.fn.picker();
         });
 
@@ -170,6 +171,12 @@
             }
             row.prev().find(".hide").show();
             $(this).closest('tr').remove();
+        });
+
+        //To Date Selection based on From date
+        $(document).on('change', '.from-date', function() {
+            var fromDate = $(this).val();
+            $(this).closest('tr').find('.to-date').attr('min', fromDate);
         });
 
         //file Upload error handling
