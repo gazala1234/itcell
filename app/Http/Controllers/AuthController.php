@@ -39,7 +39,7 @@ class AuthController extends Controller
         if ($user) {
             return response()->json(['message' => 'Registered successfully'], 201);
         }else{
-            return response()->json(['error' => 'User creation failed', 'exception' => $e->getMessage()], 500);
+            return response()->json(['error' => 'User creation failed', 'exception'], 500);
         }
     }
 
