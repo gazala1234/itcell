@@ -26,8 +26,8 @@ class AuthController extends Controller
             'password_confirmation' => 'required'
         ]);
 
-        if($validatedData->fails()){
-            return response()->json($validatedData->errors(), 422);           
+        if ($validatedData->fails()) {
+            return response()->json($validatedData->errors(), 422);
         }
         // Get the validated data
         $validatedData = $validatedData->validated();
@@ -38,7 +38,7 @@ class AuthController extends Controller
         ]);
         if ($user) {
             return response()->json(['message' => 'Registered successfully'], 201);
-        }else{
+        } else {
             return response()->json(['error' => 'User creation failed', 'exception'], 500);
         }
     }
@@ -51,16 +51,16 @@ class AuthController extends Controller
             'email' => 'required',
             'password' => 'required'
         ]);
-    
-        if($validatedData->fails()){
-            return response()->json($validatedData->errors(), 422);           
-        }    
-        $data = $validatedData->validated();    
+
+        if ($validatedData->fails()) {
+            return response()->json($validatedData->errors(), 422);
+        }
+        $data = $validatedData->validated();
         // Attempt to find the user by email
         $user = DB::table('admin')
-                    ->where('email', $data['email'])
-                    ->orWhere('mobile', $data['email'])
-                    ->first();
+            ->where('email', $data['email'])
+            ->orWhere('mobile', $data['email'])
+            ->first();
 
         if ($user) {
             // User found, now check password
@@ -77,5 +77,31 @@ class AuthController extends Controller
             return response()->json(['error' => 'User not found with provided email'], 422);
         }
     }
-    
+
+
+    // CHANGE PASSWORD METHOD
+    public function changePassword()
+    {
+        return view('changePassword');
+    }
+
+    public function submitPassword(Request $request)
+    {
+        // Validate the incoming request
+        $validatedData = Validator::make($request->all(), [
+            'old_pass' => 'required',
+            'new_pass' => 'required|confirmed',
+            'new_confirm' => 'required'
+        ]);
+
+        // VALIDATION FAILS
+        if ($validatedData->fails()) {
+            return response()->json($validatedData->errors(), 422);
+        }
+        $data = $validatedData->validated();
+
+        // Query to check old password is correct or not
+
+
+    }
 }
