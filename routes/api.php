@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Contact;
 use App\Http\Controllers\AssignmentController;
 
 // Route::get('/user', function (Request $request) {
@@ -24,6 +25,11 @@ Route::middleware(['web'])->group(function () {
         Route::get('/View_Assignment', 'viewAssignment')->name('view_assignment');
     });
 
+    //Route handled by Contact - Controller
+    Route::controller(Contact::class)->group(function () {
+        Route::get('/Contact', 'index')->name('contact');
+    });
+    
 
     // Logout route (outside of groups)
     Route::get('/logout', function (Request $request) {
