@@ -48,7 +48,7 @@ class AuthController extends Controller
     {
         // Validate the incoming request
         $validatedData = Validator::make($request->all(), [
-            'email' => 'required|email',
+            'email' => 'required',
             'password' => 'required'
         ]);
     
@@ -59,6 +59,7 @@ class AuthController extends Controller
         // Attempt to find the user by email
         $user = DB::table('admin')
                     ->where('email', $data['email'])
+                    ->orWhere('mobile', $data['email'])
                     ->first();
 
         if ($user) {
