@@ -30,7 +30,7 @@
             </li><!-- End Assignments Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="pages-contact.html">
+                <a class="nav-link collapsed" href="{{ route('contact') }}">
                     <i class="bi bi-people-fill" style="font-size: 20px;"></i><span>Contact</span>                   
                 </a>
             </li><!-- End Contact Page Nav -->
