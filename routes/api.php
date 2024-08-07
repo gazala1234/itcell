@@ -16,6 +16,8 @@ Route::middleware(['web'])->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::get('/register', 'register')->name('register');
         Route::post('/login', 'login')->name('login');
+        Route::get('/changePass', 'changePassword')->name('changePass');
+        Route::post('/submitChangedPassword', 'submitPassword')->name('submitPass');
     });
 
     // Routes handled by AssignmentController
