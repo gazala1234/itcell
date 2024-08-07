@@ -1,4 +1,4 @@
-@extends('navbar')
+@extends('mainPage')
 
 @section('maincontent')
 
