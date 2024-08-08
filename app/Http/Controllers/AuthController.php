@@ -157,6 +157,8 @@ class AuthController extends Controller
     }
     public function profile_form()
     {
+        $fid = Session::get('id');
+
         return view('myProfile');
     }
 }
