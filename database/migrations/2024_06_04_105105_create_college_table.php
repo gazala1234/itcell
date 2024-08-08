@@ -24,9 +24,9 @@ return new class extends Migration
             $table->integer('prt');
             $table->string('sts');
             $table->integer('cwf_id');
-            $table->string('cdate');
-            $table->string('udate');
-            $table->timestamps();
+            $table->timestamp('cdate')->useCurrent();
+            $table->timestamp('udate')->useCurrent()->useCurrentOnUpdate();
+            //$table->timestamps();
         });
     }
 
