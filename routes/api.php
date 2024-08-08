@@ -19,6 +19,8 @@ Route::middleware(['web'])->group(function () {
         Route::post('/login', 'login')->name('login');
         Route::get('/changePass', 'changePassword')->name('changePass');
         Route::post('/submitChangedPassword', 'submitPassword')->name('submitPass');
+        Route::get('/forgotPass', 'forgotPass')->name('forgotPass');
+        Route::post('/forgotPassword', 'forgotPassword')->name('forgotPassword');
     });
 
     // Routes handled by AssignmentController
@@ -33,7 +35,6 @@ Route::middleware(['web'])->group(function () {
         Route::get('/Contact', 'index')->name('contact');
     });
     
-
     // Logout route (outside of groups)
     Route::get('/logout', function (Request $request) {
         $request->session()->forget(['id', 'name', 'cid', 'did']);
