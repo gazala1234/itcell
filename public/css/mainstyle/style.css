@@ -1246,3 +1246,90 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+/*--------------------------------------------------------------
+# My Profile Card
+--------------------------------------------------------------*/
+
+/* Profile Card */
+/* Profile Card */
+.profile-card {
+  margin: 0 20%;
+  width: 60%;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Profile Image */
+.profile-img {
+  margin: 20px auto;
+  width: 150px;
+  height: 150px;
+  /* border-bottom: 2px solid #3e4f6f; */
+  /* padding-bottom: 20px; */
+}
+
+.profile-img img {
+  width: 150px;
+  height: 150px;
+  border: 5px solid #535252;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.profile-img img:hover {
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Name */
+.card-title {
+  color: #333;
+  font-weight: 800;
+  font-size: 30px;
+  /* margin-top: 15px; */
+}
+
+/* Divider under Name */
+.name-divider {
+  width: 100%;
+  margin: 10px auto;
+  border-top: 2px solid #3e4f6f;
+}
+
+/* Employee Details */
+.card-text {
+  color: #777;
+  /* margin-bottom: 10px; */
+  text-align: left;
+  padding-left: 15px;
+}
+
+.card-text .heading{
+  color: #333;
+}
+/* Footer Buttons */
+.card-footer {
+  background-color: #f8f9fa;
+  border-top: none;
+  border-radius: 0 0 15px 15px;
+}
+
+.card-footer .btn {
+  width: 150px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+
+
+/*--------------------------------------------------------------
+# End My Profile Card
+--------------------------------------------------------------*/
