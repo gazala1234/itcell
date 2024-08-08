@@ -9,6 +9,11 @@
     </div>
     <!-- End Page Title -->
 
+    <head>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <!-- Other head elements -->
+    </head>
+
     {{-- dashboard content will come here --}}
     <section class="section dashboard" id="section">
 
