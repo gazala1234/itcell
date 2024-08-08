@@ -1,3 +1,4 @@
+
 @extends('mainPage')
 
 @section('maincontent')
@@ -7,45 +8,45 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <style>
+        .add_new,
+        .delete:hover {
+            cursor: pointer;
+        }
+
+        .add_new,
+        .delete {
+            font-size: 35px;
+
+        }
+
+        .add_new {
+            color: #28A745;
+        }
+
+        .delete {
+            color: #DC3545;
+        }
+
+        .hc {
+            display: none;
+        }
+    </style>
+
     <center>
         <form id="fTable" method="post" action="#" enctype="multipart/form-data">
             <div class="card">
 
-                <div class="card-header mt-2">
+                <div class="card-header">
                     <p style="font-weight:bold;font-size:18px;color:black">ADD ASSIGNMENTS<br></p>
                 </div>
-                <style>
-                    .add_new,
-                    .delete:hover {
-                        cursor: pointer;
-
-                    }
-
-                    .add_new,
-                    .delete {
-                        font-size: 35px;
-
-                    }
-
-                    .add_new {
-                        color: #28A745;
-                    }
-
-                    .delete {
-                        color: #DC3545;
-                    }
-
-                    .hc {
-                        display: none;
-                    }
-                </style>
                 <div class="card-body " style="font-size:13px">
                     <table class="table table-bordered mt-3">
                         <thead class="table-dark">
                             <tr style='text-transform: uppercase; text-align:center;'>
                                 <th rowspan='2'>Sl No</th>
                                 <th rowspan='2'>Academic Year</th>
-                                <th rowspan='2'>Task Name</th>
+                                <th rowspan='2'>Task Title</th>
                                 <th rowspan='2'>Description</th>
                                 <th colspan='2'>Deadline</th>
                                 <th rowspan='2'>Upload Document</th>
@@ -62,37 +63,36 @@
                                 <td><span class="sl" style="font-size:18px;">1</span></td>
 
                                 <td>
-                                    <select class='form-control' name='acd_year[]' id='acd_year' required>
-                                        <option value=''>select academic year</option>
-                                        <option>2019-2020</option>
-                                        <option>2020-2021</option>
-                                        <option>2021-2022</option>
-                                        <option>2022-2023</option>
-                                        <option>2023-2024</option>
+                                    <select class='form-control' name='acd_year[]' id='acd_year'>
+                                        <option value=''>Select academic year</option>
+                                        @foreach ($academicYears as $year)
+                                            <option value="{{ $year->id }}">{{ $year->academic_year }}</option>
+                                        @endforeach
                                     </select>
-                                </td>
-                                <td>
-                                    <input type='text' id='task' name='task[]' class='form-control'
-                                        placeholder='Enter Task Name' required>
                                 </td>
 
                                 <td>
-                                    <textarea id='description' name='description[]' class='form-control' placeholder='Enter Description' required></textarea>
+                                    <input type='text' id='task' name='task[]' class='form-control'
+                                        placeholder='Enter Task Title'>
+                                </td>
+
+                                <td>
+                                    <textarea id='description' name='description[]' class='form-control' placeholder='Enter Description'></textarea>
                                 </td>
 
                                 <td>
                                     <input type='date' id='from' name='from[]' class='form-control from-date'
-                                        placeholder='Enter From Date' required>
+                                        placeholder='Enter From Date'>
                                 </td>
 
                                 <td>
                                     <input type='date' id='to' name='to[]' class='form-control to-date'
-                                        placeholder='Enter To Date' required>
+                                        placeholder='Enter To Date'>
                                 </td>
 
                                 <td>
                                     <input type='file' id='file' multiple='multiple' name='file[]'
-                                        class='form-control' onchange='validateFile(this)' required>
+                                        class='form-control' onchange='validateFile(this)'>
                                 </td>
                                 <td>
                                     <center>
@@ -115,6 +115,18 @@
     </center>
 
     <script>
+        // Pass the academic years from Blade to JavaScript
+        const academicYears = @json($academicYears);
+
+        // Function to generate the academic year options HTML
+        function generateAcademicYearOptions() {
+            let options = "<option value=''>Select academic year</option>";
+            academicYears.forEach(year => {
+                options += `<option value="${year.id}">${year.academic_year}</option>`;
+            });
+            return options;
+        }
+
         $(document).on('click', '.add_new', function() {
             var row = $(this).closest('tr');
             row.find(".hide").hide();
@@ -122,31 +134,12 @@
             sl++;
             markup = '<tr>';
             markup += '<td><span class="sl" style="font-size:18px;">' + sl + '</span></td>';
-            //Academic Year Field
-            markup += "<td><select class='form-control' name='acd_year[]' id='acd_year' required>" +
-                "<option value=''>select academic year</option>" +
-                "<option>2019-2020</option>" +
-                "<option>2020-2021</option>" +
-                "<option>2021-2022</option>" +
-                "<option>2022-2023</option>" +
-                "<option>2023-2024</option>" +
-                "</select></td>";
-            //Task Name Field
-            markup +=
-                "<td><input type='text' id='task' name='task[]' class='form-control' placeholder='Enter Task Name' required></td>";
-            //Description Field
-            markup +=
-                "<td><textarea id='description' name='description[]' class='form-control' placeholder='Enter Description' required></textarea></td>";
-            //From Date Field
-            markup +=
-                "<td><input type='date' id='from' name='from[]' class='form-control from-date' placeholder='Enter From Date' required></td>";
-            //To Date Field
-            markup +=
-                "<td><input type='date' id='to' name='to[]' class='form-control to-date' placeholder='Enter To Date' required></td>";
-            //File Upload Field
-            markup +=
-                "<td><input type='file' id='file' name='file[]' class='form-control' onchange='validateFile(this)' required></td>";
-            //Add and Delete Icon Field
+            markup += `<td><select class='form-control' name='acd_year[]' id='acd_year' required>${generateAcademicYearOptions()}</select></td>`;
+            markup += "<td><input type='text' id='task' name='task[]' class='form-control' placeholder='Enter Task Name' required></td>";
+            markup += "<td><textarea id='description' name='description[]' class='form-control' placeholder='Enter Description' required></textarea></td>";
+            markup += "<td><input type='date' id='from' name='from[]' class='form-control from-date' placeholder='Enter From Date' required></td>";
+            markup += "<td><input type='date' id='to' name='to[]' class='form-control to-date' placeholder='Enter To Date' required></td>";
+            markup += "<td><input type='file' id='file' name='file[]' class='form-control' onchange='validateFile(this)' required></td>";
             markup += "<td>";
             markup += "<center>";
             markup += "<i class='bi bi-patch-plus add_new hide' style='font-size:27px'></i>";
@@ -167,19 +160,19 @@
                     title: "Cannot delete the First row",
                     icon: "warning",
                 });
-                return
+                return;
             }
             row.prev().find(".hide").show();
             $(this).closest('tr').remove();
         });
 
-        //To Date Selection based on From date
+        // To Date Selection based on From date
         $(document).on('change', '.from-date', function() {
             var fromDate = $(this).val();
             $(this).closest('tr').find('.to-date').attr('min', fromDate);
         });
 
-        //file Upload error handling
+        // File Upload Error Handling
         function validateFile(input) {
             const file = input.files[0];
             if (file) {
