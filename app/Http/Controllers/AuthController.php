@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\validator;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -65,7 +66,12 @@ class AuthController extends Controller
         if ($user) {
             // User found, now check password
             if ($data['password'] === $user->pass) {
-                session(['id' => $user->id, 'name' => $user->name, 'cid' => $user->cid, 'did' => $user->did]);
+                session([
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'cid' => $user->cid,
+                    'did' => $user->did
+                ]);
                 // dd($user);
                 return response()->json(['message' => 'Logged in successfully', 'user' => $user], 201);
             } else {
@@ -74,7 +80,7 @@ class AuthController extends Controller
             }
         } else {
             // User not found with the provided email
-            return response()->json(['error' => 'User not found with provided email'], 422);
+            return response()->json(['error' => 'User not found with provided email or phone'], 422);
         }
     }
 
@@ -90,18 +96,62 @@ class AuthController extends Controller
         // Validate the incoming request
         $validatedData = Validator::make($request->all(), [
             'old_pass' => 'required',
-            'new_pass' => 'required|confirmed',
-            'new_confirm' => 'required'
+            'new_pass' => 'required',
+            'new_confirm' => 'required|same:new_pass'
         ]);
 
-        // VALIDATION FAILS
         if ($validatedData->fails()) {
             return response()->json($validatedData->errors(), 422);
         }
-        $data = $validatedData->validated();
 
-        // Query to check old password is correct or not
+        $id = Session::get('id');
+        $user = DB::table('admin')->where('id', $id)->first();
 
+        if ($request->old_pass !== $user->pass) {
+            return response()->json(['error' => 'Incorrect old password'], 400);
+        }
 
+        if ($request->old_pass === $request->new_pass) {
+            return response()->json(['error' => 'Old and new password cannot be the same'], 400);
+        }
+
+        DB::table('admin')->where('id', $id)->update(['pass' => $request->new_pass]);
+
+        return response()->json(['message' => 'Password changed successfully'], 200);
+    }
+
+    // FORGOT PASSWORD METHOD
+    public function forgotPass()
+    {
+        return view('forgotPass');
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        // Validate the incoming request
+        $validatedData = Validator::make($request->all(), [
+            'email' => 'required',
+            'new_pass' => 'required',
+            'new_confirm' => 'required|same:new_pass'
+        ]);
+
+        if ($validatedData->fails()) {
+            return response()->json($validatedData->errors(), 422);
+        }
+
+        $email = $request->email;
+
+        $user = DB::table('admin')
+            ->where('email', $email)
+            ->first();
+        if (!$user) {
+            return response()->json(['error' => 'Incorrect email id'], 400);
+        } else if ($user->pass == $request->new_pass) {
+            return response()->json(['error' => 'New password is same as old password'], 400);
+        }
+        DB::table('admin')
+            ->where('email', $email)
+            ->update(['pass' => $request->new_pass]);
+        return response()->json(['message' => 'Password set successfully'], 200);
     }
 }
