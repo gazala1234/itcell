@@ -25,8 +25,8 @@
 
                                 <div class="card-body">
 
-                                    <div class="pt-3 pb-2">
-                                        <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+                                    <div class="pb-2">
+                                        <h5 class="card-title text-center pb-0 fs-5">Login to Your Account</h5>
                                         {{-- <p class="text-center small">Enter your email & password to login</p> --}}
                                     </div>
 
@@ -37,7 +37,7 @@
                                             <label for="email" class="form-label">Email/Mobile No</label>
                                             <div class="input-group has-validation">
                                                 <input type="text" name="email" class="form-control" id="email"
-                                                    placeholder="Enter email" required>
+                                                    placeholder="Enter email">
                                                 <div class="invalid-feedback">Please enter your email.</div>
                                             </div>
                                         </div>
@@ -45,7 +45,7 @@
                                         <div class="col-12">
                                             <label for="password" class="form-label">Password</label>
                                             <input type="password" name="password" class="form-control" id="password"
-                                                placeholder="Enter password" required>
+                                                placeholder="Enter password">
                                             <div class="invalid-feedback">Please enter your password!</div>
                                         </div>
 
@@ -53,12 +53,14 @@
                                             <button class="btn btn-primary w-100" type="submit"
                                                 id="lsubmit">Login</button>
                                         </div>
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <p class="small mb-0">Don't have an account? <a
                                                     href="{{ route('registerForm') }}">Create an account</a></p>
+                                        </div> --}}
+                                        <div class="col-12 text-center">
+                                            <a href="{{ route('forgotPass') }}">Forgot Password</a>
                                         </div>
                                     </form>
-
                                 </div>
                             </div>
 
@@ -70,9 +72,7 @@
 
         </div>
     </main><!-- End #main -->
-
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+    
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     {{-- javascript code to login --}}
