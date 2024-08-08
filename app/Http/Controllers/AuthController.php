@@ -101,7 +101,11 @@ class AuthController extends Controller
         $data = $validatedData->validated();
 
         // Query to check old password is correct or not
+    }
 
 
+    public function profile_form()
+    {
+        return view('myProfile');
     }
 }
