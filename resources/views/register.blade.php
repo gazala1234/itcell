@@ -10,6 +10,9 @@
     <meta content="" name="keywords">
     @include('links')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
 
 <body style="background-color: gainsboro;">
@@ -17,7 +20,8 @@
     <main>
         <div class="container">
 
-            <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <section
+                class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
@@ -28,25 +32,29 @@
                                         {{-- <p class="text-center small">Enter your personal details to create account</p> --}}
                                     </div>
 
-                                    <form class="row g-3 needs-validation" id="registerFormElement" method="post" novalidate>
+                                    <form class="row g-3 needs-validation" id="registerFormElement" method="post"
+                                        novalidate>
                                         @csrf
                                         <div class="col-12">
                                             <label for="regEmail" class="form-label">Email</label>
                                             <div class="input-group has-validation">
-                                                <input type="email" name="regEmail" class="form-control" id="regEmail" placeholder="Enter Email" required>
+                                                <input type="email" name="regEmail" class="form-control"
+                                                    id="regEmail" placeholder="Enter Email" required>
                                                 <div class="invalid-feedback">Please enter your email.</div>
                                             </div>
                                         </div>
 
                                         <div class="col-12">
                                             <label for="regPassword" class="form-label">Password</label>
-                                            <input type="password" name="regPassword" class="form-control" id="regPassword" placeholder="Enter Password" required>
+                                            <input type="password" name="regPassword" class="form-control"
+                                                id="regPassword" placeholder="Enter Password" required>
                                             <div class="invalid-feedback">Please enter your password!</div>
                                         </div>
 
                                         <div class="col-12">
                                             <label for="confirmPassword" class="form-label">Confirm Password</label>
-                                            <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Enter Confirm Password" required>
+                                            <input type="password" name="confirmPassword" class="form-control"
+                                                id="confirmPassword" placeholder="Enter Confirm Password" required>
                                             <div class="invalid-feedback">Please enter your password!</div>
                                         </div>
 
@@ -54,7 +62,8 @@
                                             <button class="btn btn-primary w-100" type="submit">Create Account</button>
                                         </div>
                                         <div class="col-12">
-                                            <p class="small mb-0">Already have an account? <a href="{{ route('index') }}">Log in</a></p>
+                                            <p class="small mb-0">Already have an account? <a
+                                                    href="{{ route('index') }}">Log in</a></p>
                                         </div>
                                     </form>
 
@@ -70,44 +79,44 @@
         </div>
     </main><!-- End #main -->
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('registerFormElement');
 
-            form.addEventListener('submit', function (e) {
+            form.addEventListener('submit', function(e) {
                 e.preventDefault();
 
                 const email = document.getElementById('regEmail').value;
                 const password = document.getElementById('regPassword').value;
                 const password_confirmation = document.getElementById('confirmPassword').value;
 
-                fetch('/api/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({ email, password, password_confirmation })
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        return response.json().then(errorData => {
-                            throw errorData;
-                        });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    alert('Registered successfully');
-                    location.reload();
-                })
-                .catch(error => {
-                    const errorMessage = Object.values(error).flat().join('\n');
-                    alert(errorMessage);
-                    location.reload();
-                });
+                axios.post('/api/register', {
+                        email: email,
+                        password: password,
+                        password_confirmation: password_confirmation
+                    }, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                .getAttribute('content')
+                        }
+                    })
+                    .then(response => {
+                        alert('Registered successfully');
+                        window.location.href = "{{ route('login_form') }}";
+                    })
+                    .catch(error => {
+                        if (error.response && error.response.data) {
+                            const errorMessage = Object.values(error.response.data).flat().join('\n');
+                            alert(errorMessage);
+                        } else {
+                            alert('An error occurred');
+                        }
+                        location.reload();
+                    });
             });
         });
     </script>

@@ -14,7 +14,8 @@ use App\Http\Controllers\AssignmentController;
 Route::middleware(['web'])->group(function () {
     // Routes handled by AuthController
     Route::controller(AuthController::class)->group(function () {
-        Route::get('/register', 'register')->name('register');
+        Route::post('/register', 'register')->name('register');
+        Route::get('/login', 'index')->name('login_form');
         Route::post('/login', 'login')->name('login');
     });
 
