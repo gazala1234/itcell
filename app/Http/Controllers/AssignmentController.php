@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Assignment;
 
 class AssignmentController extends Controller
 {
     public function index()
     {
-        return view('Assignment.add_assignment');
+        $cid = session('cid');
+        $academicYears = Assignment::where('cid', $cid)->get();
+        return view('Assignment.add_assignment', compact('academicYears'));
     }
 
     public function submitAssign()
     {
-
     }
 
     public function viewAssignment()
