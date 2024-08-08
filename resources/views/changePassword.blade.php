@@ -1,9 +1,9 @@
 @extends('mainPage')
 
 @section('maincontent')
-    <div class="container mt-5">
-        <h2 class="text-center">Change Password</h2>
-        <form method="POST">
+    <div class="container">
+        <h4 class="text-center">Change Password</h4>
+        <form id="passwordForm" method="POST">
             @csrf
 
             <!-- Old Password Field -->
@@ -34,7 +34,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('loginFormElement');
+            const form = document.getElementById('passwordForm');
 
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -43,24 +43,21 @@
                 const new_pass = document.getElementById('new_pass').value;
                 const new_confirm = document.getElementById('new_confirm').value;
 
-
-                axios.post('/api/submitPass', {
+                axios.post('{{ route('submitPass') }}', {
                         old_pass: old_pass,
                         new_pass: new_pass,
                         new_confirm: new_confirm
                     }, {
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                                .getAttribute('content')
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                         }
                     })
                     .then(response => {
-                        // Redirect to dashboard on successful login
+                        alert('Password changed successfully');
                         window.location.href = "{{ route('dashboard') }}";
                     })
                     .catch(error => {
-                        // Handle error response
                         let errorMessage = '';
                         if (error.response && error.response.data) {
                             errorMessage = Object.values(error.response.data).flat().join('\n');
@@ -68,7 +65,7 @@
                             errorMessage = 'An unexpected error occurred.';
                         }
                         alert(errorMessage);
-                        console.error('Error:', error);
+                        location.reload();
                     });
             });
         });
