@@ -27,7 +27,9 @@ return new class extends Migration
             $table->string('status');
             $table->integer('type1');
             $table->integer('academic_type');            
-            $table->timestamps();
+            $table->timestamp('cdate')->useCurrent();
+            $table->timestamp('udate')->useCurrent()->useCurrentOnUpdate();
+
         });
     }
 
