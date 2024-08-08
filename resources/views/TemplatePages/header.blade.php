@@ -229,9 +229,9 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                                <i class="bi bi-gear"></i>
-                                <span>Account Settings</span>
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('changePass') }}">
+                                <i class="bi bi-eye-slash"></i>
+                                <span>Change Password</span>
                             </a>
                         </li>
                         <li>
