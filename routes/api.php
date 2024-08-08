@@ -21,6 +21,7 @@ Route::middleware(['web'])->group(function () {
         Route::post('/submitChangedPassword', 'submitPassword')->name('submitPass');
         Route::get('/forgotPass', 'forgotPass')->name('forgotPass');
         Route::post('/forgotPassword', 'forgotPassword')->name('forgotPassword');
+        Route::get('/myProfile', 'profile_form')->name('myProfile');
     });
 
     // Routes handled by AssignmentController

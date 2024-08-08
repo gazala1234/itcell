@@ -106,6 +106,7 @@ class AuthController extends Controller
 
         $id = Session::get('id');
         $user = DB::table('admin')->where('id', $id)->first();
+        // Query to check old password is correct or not
 
         if ($request->old_pass !== $user->pass) {
             return response()->json(['error' => 'Incorrect old password'], 400);
@@ -153,5 +154,9 @@ class AuthController extends Controller
             ->where('email', $email)
             ->update(['pass' => $request->new_pass]);
         return response()->json(['message' => 'Password set successfully'], 200);
+    }
+    public function profile_form()
+    {
+        return view('myProfile');
     }
 }
