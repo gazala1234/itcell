@@ -60,7 +60,7 @@
             if($role == 'developer'){
             @endphp
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ route('contact') }}">
+                    <a class="nav-link collapsed" href="{{ route('D_assignTask') }}">
                         <i class="bi bi-table" style="font-size: 20px;"></i><span>Assigned Tasks</span>                   
                     </a>
                 </li>

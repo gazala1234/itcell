@@ -22,4 +22,9 @@ class AssignmentController extends Controller
     {
         return view('Assignment.view_assignment');
     }
+
+    public function d_assignTask()
+    {
+        return view('Assignment.dAssign_task');
+    }
 }

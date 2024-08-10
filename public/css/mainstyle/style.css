@@ -1328,8 +1328,28 @@ h6 {
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
+/*--------------------------------------------------------------
+# End My Profile Card
+--------------------------------------------------------------*/
+
 
 
 /*--------------------------------------------------------------
-# End My Profile Card
+# Start Assigned Task View Form Developer
+--------------------------------------------------------------*/
+.assign-task-form{
+
+  margin:5% 0 20% 0;
+
+}
+
+.assign-task-form h4{
+   font-size: 25px;
+   font-weight: bold;
+   text-decoration: underline;
+}
+
+
+/*--------------------------------------------------------------
+# End Assigned Task View Form Developer
 --------------------------------------------------------------*/

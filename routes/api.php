@@ -29,6 +29,9 @@ Route::middleware(['web'])->group(function () {
         Route::get('/Add_Assignment', 'index')->name('add_assignment');
         Route::get('/submitAssignment', 'submitAssign')->name('submitAssign');
         Route::get('/View_Assignment', 'viewAssignment')->name('view_assignment');
+        Route::get('/Assigned_Tasks', 'd_assignTask')->name('D_assignTask');
+
+
     });
 
     //Route handled by Contact - Controller
