@@ -70,7 +70,8 @@ class AuthController extends Controller
                     'id' => $user->id,
                     'name' => $user->name,
                     'cid' => $user->cid,
-                    'did' => $user->did
+                    'did' => $user->did,
+                    'role' => $user->role
                 ]);
                 // dd($user);
                 return response()->json(['message' => 'Logged in successfully', 'user' => $user], 201);
